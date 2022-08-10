@@ -18,6 +18,7 @@ const Home = () => {
   const [startGame, setStartGame] = useState(false);
   const [rollTimes, setRollTimes] = useState(0);
   const [showInput, setShowInput] = useState(false);
+  const [shake, setShake] = useState(false);
   const dices = [dice1, dice2, dice3, dice4, dice5, dice6];
   console.log(inputPlayers);
 
@@ -49,6 +50,7 @@ const Home = () => {
                     <div className="startGame">
                       {inputPlayers.map((players) => (
                         <img
+                          className={`${shake ? "shake" : ""}`}
                           src={`${dice1}`}
                           key={players}
                           style={{
@@ -60,7 +62,14 @@ const Home = () => {
                         />
                       ))}
                     </div>
-                    <div className="play">Roll the Dice</div>
+                    <div
+                      className="play"
+                      onClick={() => {
+                        setShake(!shake);
+                      }}
+                    >
+                      {shake ? "Stop" : "Roll the Dice"}
+                    </div>
                   </>
                 ) : (
                   <>
