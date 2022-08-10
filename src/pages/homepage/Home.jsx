@@ -19,16 +19,19 @@ const Home = () => {
   const [rollTimes, setRollTimes] = useState(0);
   const [showInput, setShowInput] = useState(false);
   const [shake, setShake] = useState(false);
+  const [playerInfo, setPlayerInfo] = useState([]);
   const dices = [dice1, dice2, dice3, dice4, dice5, dice6];
   let players = [];
   for (let i = 0; i <= inputPlayers.length - 1; i++) {
+    let numberDice = Math.floor(Math.random() * 6);
     players.push({
       id: inputPlayers[i] + 1,
       rollTimes,
-      images: dices[Math.floor(Math.random() * 6)],
+      images: dices[numberDice],
+      result: numberDice + 1,
     });
   }
-  console.log(players);
+  console.log(playerInfo);
 
   const token = localStorage.getItem("token");
   const playGame = () => {
@@ -70,10 +73,20 @@ const Home = () => {
                         />
                       ))}
                     </div>
+                    <div className="rolltime">{`Roll left = ${rollTimes}`}</div>
                     <div
                       className="play"
                       onClick={() => {
                         setShake(!shake);
+                        if (rollTimes === 0) {
+                          setMsg("Roll time end");
+                          return setShowToast(true);
+                        }
+                        if (!shake) {
+                          setRollTimes((rollTimes) => rollTimes - 1);
+                          setPlayerInfo([...playerInfo, players]);
+                          localStorage.setItem(`round${rollTimes}`, playerInfo);
+                        }
                       }}
                     >
                       {shake ? "Stop" : "Roll the Dice"}
