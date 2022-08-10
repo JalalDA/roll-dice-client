@@ -6,11 +6,11 @@ export const register = (body) => {
 export const login = (body) => {
   return axios.post(`http://localhost:5000/auth/login`, body);
 };
-export const logout = (body, token) => {
+export const logout = (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  return axios.delete(`http://localhost:5000/auth/logout`, body, config);
+  return axios.delete(`http://localhost:5000/auth/logout`, config);
 };

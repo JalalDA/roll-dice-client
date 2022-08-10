@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 import "./register.css";
 import { register } from "../../modules/axios";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/loading/Loading";
 import ToastComponent from "../../components/ToastComponent";
+import eye from "../../assets/img/eye.png";
+import eyeslash from "../../assets/img/eye-slash.png";
 
 const Register = () => {
   const [username, setUserName] = useState("");
@@ -13,6 +15,7 @@ const Register = () => {
   const [load, setLoad] = useState(false);
   const [msg, setMsg] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [showPass, setShowPass] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,6 +41,12 @@ const Register = () => {
       setShowToast(!showToast);
     }
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
   return (
     <>
       {load ? <Loading /> : ""}
@@ -72,10 +81,18 @@ const Register = () => {
                 </label>
                 <label htmlFor="">
                   <input
-                    type="text"
+                    type={showPass ? "text" : "password"}
                     placeholder="Input your password"
                     onChange={(e) => {
                       setPasswod(e.target.value);
+                    }}
+                  />
+                  <img
+                    src={showPass ? eye : eyeslash}
+                    alt="showpass"
+                    className="showpass"
+                    onClick={() => {
+                      setShowPass(!showPass);
                     }}
                   />
                 </label>

@@ -20,7 +20,15 @@ const Home = () => {
   const [showInput, setShowInput] = useState(false);
   const [shake, setShake] = useState(false);
   const dices = [dice1, dice2, dice3, dice4, dice5, dice6];
-  console.log(inputPlayers);
+  let players = [];
+  for (let i = 0; i <= inputPlayers.length - 1; i++) {
+    players.push({
+      id: inputPlayers[i] + 1,
+      rollTimes,
+      images: dices[Math.floor(Math.random() * 6)],
+    });
+  }
+  console.log(players);
 
   const token = localStorage.getItem("token");
   const playGame = () => {
@@ -48,11 +56,11 @@ const Home = () => {
                   <>
                     <div>Enjoy the game</div>
                     <div className="startGame">
-                      {inputPlayers.map((players) => (
+                      {players.map((players) => (
                         <img
                           className={`${shake ? "shake" : ""}`}
-                          src={`${dice1}`}
-                          key={players}
+                          src={players.images}
+                          key={players.id}
                           style={{
                             height: "50px",
                             width: "50px",
