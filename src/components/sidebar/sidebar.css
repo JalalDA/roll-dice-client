@@ -1,0 +1,8 @@
+.sidebar-contianer{
+    display: flex;
+    flex: 3;
+    height: 60vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
